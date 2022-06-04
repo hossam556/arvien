@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;700;800;900&display=swap');
+    * {
+        font-family: 'Cairo', sans-serif;
+      }
+
+   
+  }
+
+  
+
+@layer components {
+    .btn{
+      @apply border-0 min-h-0 hover:border-none 
+    }
+}
