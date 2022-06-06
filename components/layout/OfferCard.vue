@@ -3,24 +3,38 @@
       <img
           class="h-[250px] object-fit w-full rounded-xl overflow-hidden cursor-pointer transition-all duration-500 hover:opacity-90"
           alt
-          src="https://arvein.net/images/offers/1629733841_medical-has-pcr-test-coronavirus-covid-19-collection-process-nasal-samples-np-op-oral-viral-dna-diagnostic-procedure-rt-pcr.jpg"
+          :src="service.offer_image"
         />
-        <div class="p-3 text-right">
+        <div style="height:calc(100% - 250px)" class="flex flex-col justify-between p-3 text-right bg-red-200">
             <div class="text-right ">
-              <p class="py-1 text-lg text-black">فحص كوفيد 19</p>
-              <p class="py-1 text-sm text-slate-800">النتيجة خلال 14 ساعة</p>
+              <p class="py-1 text-lg text-black">{{service.offer_title}}</p>
+              <p class="py-1 text-sm text-slate-800">{{service.offer_sub_title}}</p>
             </div>
-            <p class="mt-4 text-sm text-black">99 ريال</p>
-        <button class="flex items-center justify-center w-full py-2 mt-2 text-white rounded-md bg-main-1">
-            احجز الان
-        </button>
+            <p class="flex items-center justify-end mt-4 text-sm text-black">
+              ريال 
+              <span class="text-lg">{{service.offer_new_price}}</span> 
+              <Money class="w-4 h-4"/>
+            </p>
+            <button class="flex items-center justify-center w-full py-2 mt-2 text-white rounded-md bg-main-1">
+               احجز الان
+            </button>
         </div>
   </div>
 </template>
 
 <script>
+import Money from '../icons/money.vue'
 export default {
-
+    props: {
+        service: {
+            type: Object,
+            default: () => {
+                return {};
+            },
+            required: true,
+        }
+    },
+    components: { Money }
 }
 </script>
 

@@ -94,7 +94,7 @@
     </section>
 
     <section class="grid grid-cols-4 gap-6 mt-10">
-        <OfferCard v-for="n in 12" :key="n"/>
+        <OfferCard v-for="service in services" :key="service.id" :service="service"/>
     </section>
   </div>
 </template>
@@ -111,15 +111,43 @@ export default {
             OffersFilters: data,
             offersTab: "",
             inputValue: "",
-            selectedInput:''
+            selectedInput:'',
+            filters: {}
         };
     },
+    async fetch() { 
+      await this.$store.dispatch("services/getItems");
+   },
+    computed: {
+    services() {
+      return this.$store.state.services.services;
+    },
+  },
     methods: {
         offersTabHandler(val) {
             this.offersTab = val;
+
+            let offerTab ={
+            offerTab: {
+              id: "offerTab",
+              key: "filter[stage.id]",
+              values: val,
+            },
+            }
+
+            this.filters = { ...this.filters, ...LeadFilterStage };
         },
         handleInput(e) {
-            this.inputValue = e.target.value;
+            // this.inputValue = e.target.value;
+            let inputValue ={
+              inputValue: {
+              id: "offerTab",
+              key: "filter[stage.id]",
+              values:  e.target.value,
+            },
+            }
+
+            this.filters = { ...this.filters, ...inputValue };
         },
 
     selectInputhandler(val) {
@@ -134,6 +162,21 @@ export default {
     },
     async getMoreTypeItems(val) {
     //   await this.$store.dispatch("global/getMoreItems", val);
+    },
+
+    async applyFilters() {
+      //generate filter link
+      let filterLink = "";
+      for (const key in this.filters) {
+        filterLink =
+          filterLink + `${this.filters[key].key}=${this.filters[key].values}&`;
+      }
+      filterLink = filterLink.slice(0, -1);
+      
+    //   this.$store.commit("global/filterLink", filterLink);
+    //   this.$store.commit("global/loadHandler", true);
+    //   await this.$store.dispatch("leads/leads/getLeads");
+    //   this.$store.commit("global/loadHandler", false);
     },
     },
     components: { SearchIcon }
